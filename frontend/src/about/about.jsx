@@ -5,13 +5,13 @@ export default (props) => (
   <div>
     <PageHeader name="Sobre" small="Nós"></PageHeader>
 
-    <h1> Nossa História</h1>
+    <h2> Nossa História</h2>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
       adipisci, ab ipsum in, laboriosam totam ipsa eos amet numquam eius ad
       perferendis! Quidem impedit quod in explicabo animi hic eligendi!
     </p>
-    <h1> Missão e Visão</h1>
+    <h2> Missão e Visão</h2>
 
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
@@ -19,7 +19,7 @@ export default (props) => (
       perferendis! Quidem impedit quod in explicabo animi hic eligendi!
     </p>
 
-    <h1> Imprensa </h1>
+    <h2> Imprensa </h2>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
       adipisci, ab ipsum in, laboriosam totam ipsa eos amet numquam eius ad
