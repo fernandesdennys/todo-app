@@ -41,6 +41,7 @@ export default class Todo extends Component {
 
   handleAdd() {
     const description = this.state.description;
+    console.log("Descrição enviada:", description); // <-- Adicione aqui
     axios.post(URL, { description }).then((resp) => this.refresh());
   }
 

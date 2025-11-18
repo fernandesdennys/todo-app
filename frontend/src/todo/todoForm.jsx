@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import Grid from '../template/grid';
 import IconButton from '../template/iconButton';
-import { changeDescription, search } from './todoActions';
+import { add, changeDescription, search } from './todoActions';
 
 class TodoForm extends Component {
   constructor(props) {
@@ -13,47 +13,44 @@ class TodoForm extends Component {
   }
 
   componentWillMount() {
-    // chama a busca do pai (mantemos a conexão com Redux, mas o pai controla o estado)
-    if (this.props.handleSearch) this.props.handleSearch();
+    this.props.search();
   }
 
   keyHandler(e) {
+    const {add, search, description} = this.props;
     if (e.key === 'Enter') {
-      e.shiftKey ? this.props.handleSearch() : this.props.handleAdd();
+      e.shiftKey ? search() : add(description);
     } else if (e.key === 'Escape') {
-      // usar this.props (corrige referência indefinida)
-      if (this.props.handleClear) this.props.handleClear();
+      this.props.handleClear();
     }
   }
 
   render() {
+    const {add, search, description} = this.props;
     return (
-      <div role="form" className="todoForm">
-        <Grid cols="12 9 10">
-          <input
-            id="description"
-            className="form-control"
+      <div role='form' className='todoForm'>
+        <Grid cols='12 9 10'>
+          <input id="description" className="form-control"
             placeholder="Adicione uma tarefa"
-            // o pai (componente Todo) controla o estado local; usar handleChange passado pelo pai
-            onChange={this.props.handleChange}
+            onChange={this.props.changeDescription}
             onKeyUp={this.keyHandler}
-            value={this.props.description}
-          />
+            value={this.props.description}></input>
         </Grid>
-
-        <Grid cols="12 3 2">
-          <IconButton style="primary" icon="plus" onClick={this.props.handleAdd} />
-          <IconButton style="info" icon="search" onClick={this.props.handleSearch} />
-          <IconButton style="default" icon="close" onClick={this.props.handleClear} />
+        <Grid cols='12 3 2'>
+          <IconButton style='primary' icon='plus' 
+              onClick={() => add(description)}></IconButton>
+          <IconButton style='info' icon='search' 
+              onClick={() => search()} ></IconButton>
+          <IconButton style='default' icon='close' 
+              onClick={this.props.handleClear}></IconButton>
         </Grid>
       </div>
     );
   }
 }
 
-// Mantemos a ligação com o Redux, mas não sobrescreveremos a prop `description`
-// que vem do componente pai. Mapearemos o estado Redux para `reduxDescription`.
-const mapStateToProps = (state) => ({ reduxDescription: state.todo.description });
+const mapStateToProps = (state) => ({description: state.todo.description });
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ changeDescription, search }, dispatch);
+  bindActionCreators({ add, changeDescription, search }, dispatch);
+
 export default connect(mapStateToProps, mapDispatchToProps)(TodoForm);
